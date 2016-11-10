@@ -1,6 +1,5 @@
 # OS X
 .DS_Store
-
 # Xcode
 build/
 *.pbxuser
@@ -32,3 +31,8 @@ screenshots/
 
 # OpenOffice
 .~*
+
+# Server
+server/.build
+server/Packages
+server/*.xcodeproj
