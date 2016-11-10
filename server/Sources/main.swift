@@ -63,7 +63,7 @@ router.get("/posts") {
         contents.append(json)
     }
     let result = contents.joined(separator:",")
-    response.send("[\(result)]")
+    response.send("{\"posts\":[\(result)]}")
     next()
 }
 
