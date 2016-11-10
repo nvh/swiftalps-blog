@@ -44,6 +44,28 @@ router.get("/posts/:identifier") {
     next()
 }
 
+router.get("/posts") {
+    request, response, next in
+    let contentDirectory = URL(fileURLWithPath: "../content", isDirectory: true, relativeTo: currentDirectoryURL)
+    guard let urls = try? fileManager.contentsOfDirectory(at: contentDirectory, includingPropertiesForKeys: nil, options: []) else {
+        print("[]")
+        next()
+        return
+    }
+    var contents: [String] = []
+    for url in urls {
+        guard let data = try? Data(contentsOf: url),
+            let json = String(data: data, encoding: String.Encoding.utf8) else {
+                response.send("[]")
+                next()
+                return
+        }
+        contents.append(json)
+    }
+    let result = contents.joined(separator:",")
+    response.send("[\(result)]")
+    next()
+}
 
 }
 
