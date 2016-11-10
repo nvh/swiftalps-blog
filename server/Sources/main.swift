@@ -67,6 +67,24 @@ router.get("/posts") {
     next()
 }
 
+router.post("/posts") {
+    request, response, next in
+    let contentDirectory = URL(fileURLWithPath: "../content", isDirectory: true, relativeTo: currentDirectoryURL)
+    guard let s = try? request.readString(), let string = s else {
+        response.send("Cannot read body")
+        next()
+        return
+    }
+    let identifier = UUID().uuidString
+    var fileURL = contentDirectory.appendingPathComponent(identifier).appendingPathExtension("json")
+    print(string)
+    try? string.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
+    response.send(string)
+    next()
+}
+
+
+
 }
 
 
