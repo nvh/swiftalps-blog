@@ -18,7 +18,8 @@ function getPosts() {
 
 function showPosts(posts) {
 	var htmlPosts = "";
-	for post in posts {
+	for (index in posts) {
+    post = posts[index]
 		htmlPosts += '<div class="post"><div class="postTitle">' + post["title"] + '</div><div class="postBody">' + post["text"] + '</div></div>\n';
 	}
 	document.getElementById("posts").innerHTML = htmlPosts;
