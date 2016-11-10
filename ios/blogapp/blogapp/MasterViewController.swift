@@ -34,7 +34,7 @@ class MasterViewController: UITableViewController {
 
     func getAllBlogPosts() {
         // Set up the URL request
-        let todoEndpoint: String = "http://172.20.10.7:8090/posts"
+        let todoEndpoint: String = "http://172.20.10.7:8090/posts/b6cd8df8-62bd-417c-8f8d-5430e4a80f5a"
         guard let url = URL(string: todoEndpoint) else {
             print("Error: cannot create URL")
             return
@@ -47,9 +47,26 @@ class MasterViewController: UITableViewController {
         
         // make the request
         let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
-            // do stuff with response, data & error here
-            print(error)
-            print(response)
+            if(error != nil) {
+                // TODO show error
+                print(error)
+            }
+            else if(response != nil) {
+                print(response)
+
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: [])
+                    print(json)
+
+                } catch {
+                    print("\(error.localizedDescription)")
+                    // ok but not enough. i need to know the domain and code. well than you need to cast... bummer...
+                    let objCError = error as NSError // becaus NSError is autoboxed to Error, we do not need to make an explicit cast
+                    print("clssic NSError with domain \(objCError.domain) and code \(objCError.code)")
+                }
+                
+//                insertNewObject(<#T##data: Any##Any#>)
+            }
         })
         task.resume()
     }
@@ -63,8 +80,8 @@ class MasterViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-//    func insertNewObject(_ sender: Any) {
-//        objects.insert(NSDate(), at: 0)
+//    func insertNewObject(_ data: Any) {
+//        objects.insert(data, at: 0)
 //        let indexPath = IndexPath(row: 0, section: 0)
 //        self.tableView.insertRows(at: [indexPath], with: .automatic)
 //    }
