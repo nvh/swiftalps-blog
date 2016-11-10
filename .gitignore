@@ -31,3 +31,8 @@ screenshots/
 
 # OpenOffice
 .~*
+
+# Server
+server/.build
+server/Packages
+server/*.xcodeproj
